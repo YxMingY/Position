@@ -1,0 +1,38 @@
+package yxmingy.position;
+
+public class PositionFormat {
+	public static double radian(double angle) {
+		return angle/180*Math.PI;
+	}
+	/* y轴正方向对应0度，逆时针角度 */
+	public static double[] PolarToCoordinate(double distance,double angle) {
+		int positive_x = 0,positive_y = 0;
+		double[] coor = new double[2];
+		switch ((int)angle/90) {
+		case 0://x- y+
+			angle = 90-angle;
+			positive_x--;
+			positive_y++;
+			break;
+		case 1://x- y-
+			angle = angle-90;
+			positive_x--;
+			positive_y--;
+			break;
+		case 2://x+ y-
+			angle = 270-angle;
+			positive_x++;
+			positive_y--;
+			break;
+		case 3://x+ y+
+			angle = angle-270;
+			positive_x++;
+			positive_y++;
+			
+			break;
+		}
+		coor[0] = distance*Math.cos(radian(angle))*positive_x;
+		coor[1] = distance*Math.sin(radian(angle))*positive_y;
+		return coor;
+	}
+}
