@@ -44,7 +44,7 @@ public class PositionFormat {
 		         ppos = new double[2];
 		pos[1] = -sinDistance(distance,pitch);
 		//distance = Math.abs(pos[1])/Math.tan(radian(pitch));  等价于下一句
-		distance = Math.abs(pos[1])*Math.cos(radian(pitch));
+		distance = distance*Math.cos(radian(pitch));
 		ppos = PlanePolarToCoordinate(distance,yaw);
 		pos[0] = ppos[0];
 		pos[2] = ppos[1];
