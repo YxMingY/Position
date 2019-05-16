@@ -5,7 +5,7 @@ public class PositionFormat {
 		return angle/180*Math.PI;
 	}
 	/* y轴正方向对应0度，逆时针角度 */
-	public static double[] PolarToCoordinate(double distance,double angle) {
+	public static double[] PlanePolarToCoordinate(double distance,double angle) {
 		int positive_x = 0,positive_y = 0;
 		double[] coor = new double[2];
 		switch ((int)angle/90) {
@@ -34,5 +34,20 @@ public class PositionFormat {
 		coor[0] = distance*Math.cos(radian(angle))*positive_x;
 		coor[1] = distance*Math.sin(radian(angle))*positive_y;
 		return coor;
+	}
+	public static double sinDistance(double distance,double angle) {
+		return distance*Math.sin(radian(angle));
+	}
+	/* pitch平视为0，仰视为-90 */
+	public static double[] PolarToCoordinate(double distance,double yaw,double pitch) {
+		double[] pos = new double[3],
+		         ppos = new double[2];
+		pos[1] = -sinDistance(distance,pitch);
+		//distance = Math.abs(pos[1])/Math.tan(radian(pitch));  等价于下一句
+		distance = Math.abs(pos[1])*Math.cos(radian(pitch));
+		ppos = PlanePolarToCoordinate(distance,yaw);
+		pos[0] = ppos[0];
+		pos[2] = ppos[1];
+		return pos;
 	}
 }
